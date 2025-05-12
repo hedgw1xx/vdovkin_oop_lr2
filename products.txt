@@ -1,0 +1,10 @@
+Milk,ManufacturerA,2.5,30,100
+Bread,ManufacturerB,1.0,5,200
+Eggs,ManufacturerC,3.0,14,50
+Cheese,ManufacturerA,4.0,60,75
+Butter,ManufacturerB,2.8,45,120
+Yogurt,ManufacturerC,1.5,20,150
+Juice,ManufacturerA,2.0,90,80
+Apples,ManufacturerB,1.2,120,300
+Pasta,ManufacturerC,1.8,180,90
+Water,ManufacturerA,0.5,365,500
