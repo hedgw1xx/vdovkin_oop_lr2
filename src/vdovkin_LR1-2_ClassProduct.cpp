@@ -19,22 +19,22 @@ inline Product Product::input() {
   Product p;
   string input;
 
-  EnterString(cin, input, "Enter name: ")();
+  Enter(cin, input, "Enter name: ")();
   p.setName(input);
 
-  EnterString(cin, input, "Enter manufacturer: ")();
+  Enter(cin, input, "Enter manufacturer: ")();
   p.setManufacturer(input);
 
   double price;
-  EnterDouble(cin, price, "Enter price: ")();
+  Enter(cin, price, "Enter price: ")();
   p.setPrice(price);
 
   int shelfLife;
-  EnterInt(cin, shelfLife, "Enter shelf life (days): ")();
+  Enter(cin, shelfLife, "Enter shelf life (days): ")();
   p.setShelfLife(shelfLife);
 
   int quantity;
-  EnterInt(cin, quantity, "Enter quantity: ")();
+  Enter(cin, quantity, "Enter quantity: ")();
   p.setQuantity(quantity);
 
   return p;

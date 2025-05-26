@@ -1,6 +1,7 @@
 #ifndef VDOVKIN_DEF_HPP
 #define VDOVKIN_DEF_HPP
 
+#include <algorithm>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -22,103 +23,48 @@ inline void clearTerminal() {
 #endif
 }
 
-inline bool UserInputInt(string input) {
+template <typename T> inline bool UserInput(string input) {
   if (input.empty())
     return false;
   try {
-    int number = stoi(input);
-    if (number < 0)
-      return false;
+    if constexpr (is_same_v<T, int> || is_same_v<T, bool>) {
+      int number = stoi(input);
+      if constexpr (is_same_v<T, bool>) {
+        return number == 0 || number == 1;
+      }
+      return number >= 0;
+    } else if constexpr (is_same_v<T, double>) {
+      double number = stod(input);
+      return number >= 0.0;
+    } else if constexpr (is_same_v<T, string>) {
+      return true;
+    }
   } catch (...) {
     return false;
   }
   return true;
 }
 
-inline bool UserInputDouble(string input) {
-  if (input.empty())
-    return false;
-  try {
-    int number = stod(input);
-    if (number < 0)
-      return false;
-  } catch (...) {
-    return false;
-  }
-  return true;
-}
-
-inline bool UserInputBool(string input) {
-  if (input.empty())
-    return false;
-  try {
-    int number = stod(input);
-    if (number < 0 || number > 1)
-      return false;
-  } catch (...) {
-    return false;
-  }
-  return true;
-}
-
-inline bool UserInputString(string input) {
-  if (input.empty())
-    return false;
-  return true;
-}
-
-function<void()> inline EnterInt(istream &is, int &varLink, string label) {
+template <typename T>
+function<void()> Enter(istream &is, T &varLink, string label) {
   return [&is, &varLink, label]() {
     string raw_input;
     cout << label;
     getline(is, raw_input);
 
-    while (!UserInputInt(raw_input)) {
+    while (!UserInput<T>(raw_input)) {
       cout << label;
       getline(is, raw_input);
     }
-    varLink = stoi(raw_input);
-  };
-}
 
-function<void()> inline EnterDouble(istream &is, double &varLink,
-                                    string label) {
-  return [&is, &varLink, label]() {
-    string raw_input;
-    cout << label;
-    getline(is, raw_input);
-
-    while (!UserInputDouble(raw_input)) {
-      cout << label;
-      getline(is, raw_input);
-    }
-    varLink = stod(raw_input);
-  };
-}
-
-function<void()> inline EnterBool(istream &is, bool &varLink, string label) {
-  return [&is, &varLink, label]() {
-    string raw_input;
-    cout << label;
-    getline(is, raw_input);
-
-    while (!UserInputBool(raw_input)) {
-      cout << label;
-      getline(is, raw_input);
-    }
-    varLink = stoi(raw_input);
-  };
-}
-
-function<void()> inline EnterString(istream &is, string &varLink,
-                                    string label) {
-  return [&is, &varLink, label]() {
-    cout << label;
-    getline(cin, varLink);
-
-    while (!UserInputString(varLink)) {
-      cout << label;
-      getline(is, varLink);
+    if constexpr (is_same_v<T, int>) {
+      varLink = stoi(raw_input);
+    } else if constexpr (is_same_v<T, double>) {
+      varLink = stod(raw_input);
+    } else if constexpr (is_same_v<T, bool>) {
+      varLink = static_cast<bool>(stoi(raw_input));
+    } else if constexpr (is_same_v<T, string>) {
+      varLink = raw_input;
     }
   };
 }
