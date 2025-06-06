@@ -15,7 +15,7 @@ int main() {
        {"Show products by name",
         []() {
           string name;
-          EnterString(cin, name, "Enter product name: ")();
+          Enter(cin, name, "Enter product name: ")();
           showProductsByName(name);
         }}},
       {5,
@@ -23,15 +23,15 @@ int main() {
         []() {
           string name;
           double price;
-          EnterString(cin, name, "Enter product name: ")();
-          EnterDouble(cin, price, "Enter maximum price: ")();
+          Enter(cin, name, "Enter product name: ")();
+          Enter(cin, price, "Enter maximum price: ")();
           showProductsByNameAndPrice(name, price);
         }}},
       {6,
        {"Show products with shelf life greater than",
         []() {
           int shelfLife;
-          EnterInt(cin, shelfLife, "Enter minimum shelf life (days): ")();
+          Enter(cin, shelfLife, "Enter minimum shelf life (days): ")();
           showProductsByShelfLife(shelfLife);
         }}},
   };
@@ -46,7 +46,7 @@ int main() {
     }
     cout << "0. Exit" << endl;
 
-    EnterInt(cin, choice, "Enter your choice: ")();
+    Enter(cin, choice, "Enter your choice: ")();
 
     if (choice == 0) {
       clearTerminal();
